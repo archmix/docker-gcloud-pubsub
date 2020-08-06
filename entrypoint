@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Check user environment variable
+if [[ -z "${PUBSUB_PROJECT_ID}" ]]; then
+  export PUBSUB_PROJECT_ID=archmix
+fi
+
+if [[ -z "${PUBSUB_LISTEN_PORT}" ]]; then
+  export PUBSUB_LISTEN_PORT=8432
+fi
+
+export PUBSUB_BIND_ADDRESS=0.0.0.0:${PUBSUB_LISTEN_PORT}
+
+# Start emulator
+gcloud beta emulators pubsub start \
+  --data-dir=/opt/data \
+  --host-port=${PUBSUB_BIND_ADDRESS} \
+  --project=${PUBSUB_PROJECT_ID}
